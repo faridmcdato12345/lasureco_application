@@ -1,0 +1,100 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~admin-lte/dist/css/adminlte.css';
+@import "~font-awesome/scss/font-awesome.scss";
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
+@import "~datatables.net-buttons-bs4/css/buttons.bootstrap4.css";
+html, body {
+    background-color: #fff;
+    color: #636b6f;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+}
+.container{
+    padding:1% 10% 10% 10%;
+}
+.full-height {
+    height: 100vh;
+}
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+.content {
+    text-align: left;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+.note{
+    margin: 40px 0px 20px 0px;
+}
+.col-lg-3.logo img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+.col-lg-9.header{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+label{
+    font-weight: bold;
+}
+.required-note{color:red;}
+.spouse-div{
+    display:none;
+}
+@media only screen and (max-width: 991px) {
+    .col-lg-9.header {
+        margin: auto;
+        width: 100%;
+        padding: 0px;
+    }
+    .col-lg-3 img{
+        width: 0px;
+        height: 150px;
+        object-fit: cover;
+    }
+    .col-lg-3.logo{
+        text-align: center;
+        margin-bottom: 14px;
+    }
+}
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+    .col-lg-3.logo img {
+        width: 186px;
+        height: 186px;
+        object-fit: cover;
+    }
+}
+
