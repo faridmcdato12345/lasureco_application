@@ -12,20 +12,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>LASURECO</title>
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <script src="{{asset('js/app.js')}}"></script>
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+  <style>
+    @media print{
+    @page {
+    size: landscape;
+    }
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper" id="app">
-
+<div id="app" class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars" style="color:
-          #D50000"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars" style="color:#D50000"></i></a>
       </li>
     </ul>
   </nav>
@@ -48,7 +52,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="" class="img-circle elevation-2" alt="User Image">
         </div> --}}
         <div class="info">
-          {{-- <a href="#" class="d-block">{{Auth::user()->name}}</a> --}}
+          <a href="#" class="d-block">Username:&nbsp;&nbsp;{{Auth::user()->username}}</a>
+          <a href="#" class="d-block">Account Type:&nbsp;&nbsp;{{Auth::user()->role->name}}</a>
         </div>
       </div>
 
@@ -57,100 +62,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item dashboard">
-            <a class="nav-link">
-              <i class="nav-icon fa fa-tachometer" style="color:#76FF03;"></i>
+          
+          <li class="nav-item application">
+            <a href="{{route('application.index')}}" class="nav-link">
+              <i class="nav-icon fa fa-users" style="color:#ffffff;"></i>
               <p>
-                Dashboard
+                Applicants
+              </p>
+            </a>
+            @include('partials.notification')
+          </li>
+          <li class="nav-item inspection">
+            <a href="{{route('inspection.index')}}" class="nav-link">
+              <i class="nav-icon fa fa-search" style="color:#ffff0a;"></i>
+              <p>
+                Inspection
               </p>
             </a>
           </li>
-          {{-- @if (Auth::user()->role == 1)
+          <li class="nav-item paid">
+            <a href="{{route('paid.index')}}" class="nav-link">
+              <i class="nav-icon fa fa-money" style="color:#76FF03;"></i>
+              <p>
+                Paid
+              </p>
+            </a>
+          </li>
+          @if (Auth::user()->role_id == 1)
           <li class="nav-item user">
-            <a href="{{route('user.index')}}" class="nav-link">
+          <a href="{{route('user.index')}}" class="nav-link">
               <i class="nav-icon fa fa-user" style="color:#795548;"></i>
               <p>
                 User
               </p>
             </a>
           </li>
-          @endif --}}
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-wrench" style="color:#D500F9;"></i>
-              <p>
-                Material
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item material">
-                <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Material</p>
-                </a>
-              </li>
-              <li class="nav-item blanket">
-              <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Received</p>
-                </a>
-              </li>
-              <li class="nav-item project">
-                <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Released</p>
-                </a>
-              </li>
-              <li class="nav-item metering">
-                <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inventory</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview voucher">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-edit" style="color:#FF4081;"></i>
-              <p>
-                Material Charge Ticket
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item maintenance">
-                <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maintenance</p>
-                </a>
-              </li>
-              <li class="nav-item blanket">
-              <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blanket Work</p>
-                </a>
-              </li>
-              <li class="nav-item project">
-                <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Project</p>
-                </a>
-              </li>
-              <li class="nav-item metering">
-                <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Metering</p>
-                </a>
-              </li>
-              <li class="nav-item sitio">
-                <a class="nav-link">
-                  <i class="nav-icon"></i>
-                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sitio</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @endif
           <li class="nav-item has-treeview setting">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog" style="color:#7C4DFF"></i>
@@ -161,20 +108,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-              <a class="nav-link password">
+              <a href="{{route('profile.index')}}" class="nav-link password">
                   <i class="nav-icon"></i>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Password</p>
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item import">
-            <a class="nav-link">
-              <i class="nav-icon fa fa-file"></i>
-              <p>
-                Import File
-              </p>
-            </a>
           </li>
           <li class="nav-item form-group">
             <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
@@ -206,7 +145,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="modal fade" id="importModal" aria-hidden="true">
       @yield('importModal')
     </div>
+    @yield('check')
     @yield('addMaterial')
+    @yield('change-password')
   </div>
   
   <!-- /.content-wrapper -->
@@ -221,6 +162,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 </body>
+<script src="{{asset('js/app.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
     setTimeout(function() {
@@ -247,5 +192,4 @@ scratch. This page gets rid of all links and provides the needed markup only.
   })
 </script>
 @yield('script')
-
 </html>

@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Paid;
 use App\Photo;
-use App\Applicant;
-use Illuminate\Http\Request;
 use DataTables;
+use App\Decline;
+use App\Applicant;
+use App\Inspection;
+use App\HousePerspective;
+use Illuminate\Http\Request;
+use App\Events\ApplicationStatusChanged;
 
 class ApplicantController extends Controller
 {
@@ -17,11 +22,27 @@ class ApplicantController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Applicant::latest()->get();
+            if(!empty($request->from_date))
+            {
+                $data = Applicant::whereBetween('created_at', array($request->from_date, $request->to_date))
+                ->where('inspection_status','=','0')
+                ->where('paid_status','=','0')
+                ->where('decline_status','=','0')
+                ->get();
+            }
+            else
+            {
+                $data = Applicant::where('inspection_status','=','0')
+                ->where('paid_status','=','0')
+                ->where('decline_status','=','0')
+                ->get();
+            }
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" data-placement="top" title="Add" class="edit btn btn-primary btn-sm addToBlanketVoucher">Check</a>';
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip" data-target="#checkApplicant" data-id="'.$row->id.'" data-original-title="Edit" data-placement="top" title="Add" class="edit btn btn-primary btn-sm checkApplicant">Check</a>';
+                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" data-placement="top" title="Good for inspection" class="btn btn-success btn-sm inspectionApplicant">Inspection</a>';
+                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" data-placement="top" title="Decline applicant" class="btn btn-danger btn-sm declineApplicant">Decline</a>';
                         return $btn;
                     })
                     ->rawColumns(['action'])
@@ -55,7 +76,15 @@ class ApplicantController extends Controller
             $photo = Photo::create(['path'=>$name]);
             $input['photo_id']=$photo->id;
         }
+        if($file = $request->file('house_id')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('house',$name);
+            $photo = HousePerspective::create(['path'=>$name]);
+            $input['house_id']=$photo->id;
+        }
         Applicant::create($input);
+        $id = Applicant::latest()->first();
+        event(new ApplicationStatusChanged($id));
         return redirect('/');
     }
 
@@ -67,7 +96,12 @@ class ApplicantController extends Controller
      */
     public function show($id)
     {
-        //
+        $applicant = Applicant::find($id);
+        $photo_src = $applicant->photo->path;
+        $house_src = $applicant->house->path;
+        $applicant->push($photo_src);
+        $applicant->push($house_src);
+        return response()->json($applicant);
     }
 
     /**
@@ -102,5 +136,32 @@ class ApplicantController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function forInspection($id){
+        $applicant = Applicant::find($id);
+        $applicant->inspection_status = '1';
+        $applicant->save();
+        $applicantInspection = new Inspection;
+        $applicantInspection->applicant_id = $applicant->id;
+        $applicantInspection->save();
+        return response()->json(['success'=>'status updated.']);
+    }
+    public function applicantDeclined($id){
+        $applicant = Applicant::find($id);
+        $applicant->decline_status = '1';
+        $applicant->save();
+        $applicantDeclined = new Decline;
+        $applicantDeclined->applicant_id = $applicant->id;
+
+        return response()->json(['success'=>'status updated.']);
+    }
+    public function applicantPaid($id){
+        $applicant = Applicant::find($id);
+        $applicant->paid_status = '1';
+        $applicant->save();
+        $applicantPaid = new Paid;
+        $applicantPaid->applicant_id = $applicant->id;
+        return response()->json(['success'=>'status updated.']);
     }
 }

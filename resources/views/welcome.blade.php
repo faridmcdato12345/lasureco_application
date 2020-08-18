@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -65,6 +65,10 @@
                         {!! Form::text('last_name',null,['class'=>'form-control','required']) !!}
                     </div>
                     <div class="form-group">
+                        {!! Form::label('house_number','House Number:') !!}<span>( Optional )</span>
+                        {!! Form::text('house_number',null,['class'=>'form-control']) !!}
+                    </div>
+                    <div class="form-group">
                         {!! Form::label('street','Street:') !!}<span class="required-note">*</span>
                         {!! Form::text('street',null,['class'=>'form-control','required']) !!}
                     </div>
@@ -76,13 +80,14 @@
                         {!! Form::label('city','City / Municipality:') !!}<span class="required-note">*</span>
                         {!! Form::text('city',null,['class'=>'form-control','required']) !!}
                     </div>
-                    <div class="form-group">
-                        {!! Form::label('house_number','House Number:') !!}<span>( Optional )</span>
-                        {!! Form::text('house_number',null,['class'=>'form-control']) !!}
-                    </div>
+                    
                     <div class="form-group">
                         {!! Form::label('file','Upload Applicant Photo:') !!}<span class="required-note">*</span>
                         {!! Form::file('photo_id',['class'=>'form-control','required']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('file','Upload House Perspective:') !!}<span class="required-note">*</span>
+                        {!! Form::file('house_id',['class'=>'form-control','required']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('dob','Date of Birth: (For Applicant)') !!}<span class="required-note">*</span>
@@ -145,7 +150,8 @@
                 $('.spouse-div').toggle('slow');
             }
             else{
-                $('.spouse-div').hide('slow') 
+                $('.spouse-div').hide('slow')
+                
             }
             // if you want to do stuff based on the OPTION element:
             // var opt = $(this).find('option:selected')[0];

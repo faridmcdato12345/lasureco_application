@@ -45658,3 +45658,59 @@ label {
   }
 }
 
+.notification-count {
+  line-height: 12px;
+  padding: 2px 5px;
+  position: absolute;
+  right: 19px;
+  top: 6px;
+  background: red;
+  color: #ffff;
+  border-radius: 10px;
+  font-size: 10px;
+  font-family: inherit;
+  font-weight: bold;
+}
+
+.dropdown-menu-notifications {
+  width: 360px;
+}
+
+.dropdown-menu-notifications li {
+  padding: 0px 0;
+}
+
+.dropdown-menu-notifications li a {
+  padding: 12px 24px;
+}
+
+.dropdown-menu-notifications .divider {
+  height: 1px;
+  margin: 3px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+.dropdown-menu-notifications .see-all-notifications {
+  margin: 10px 0;
+}
+
+.dropdown-menu-notifications .see-all-notifications a {
+  color: #333 !important;
+}
+
+.navbar-brand {
+  margin-right: 30px;
+}
+
+.order-details {
+  margin-bottom: 30px;
+}
+
+.dropdown-style {
+  height: 34px;
+  width: 100%;
+  background: white;
+  border: 1px solid #E5E6E7;
+}
+

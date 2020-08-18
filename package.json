@@ -27,6 +27,8 @@
         "admin-lte": "^3.0.5",
         "datatables.net-bs4": "^1.10.21",
         "datatables.net-buttons-bs4": "^1.6.3",
-        "font-awesome": "^4.7.0"
+        "font-awesome": "^4.7.0",
+        "laravel-echo": "^1.8.1",
+        "pusher-js": "^5.0.0"
     }
 }

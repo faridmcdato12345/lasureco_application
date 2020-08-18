@@ -34,6 +34,10 @@ class CreateApplicantsTable extends Migration
             $table->string('proprietorship')->nullable();
             $table->string('classification_of_consumer')->nullable();
             $table->unsignedBigInteger('photo_id')->nullable();
+            $table->unsignedBigInteger('house_id')->nullable();
+            $table->integer('inspection_status')->default(0);
+            $table->integer('paid_status')->default(0);
+            $table->integer('decline_status')->default(0);
             $table->timestamps();
         });
     }
